@@ -1,271 +1,197 @@
 /**
  * reCaptcha Stuff
  */
-var CaptchaShort;
-var CaptchaContact;
-var CaptchaSignin;
-var CaptchaSignup;
-var CaptchaForgotpassword;
-var CaptchaShortlink;
-var invisibleCaptchaShort;
-var invisibleCaptchaContact;
-var invisibleCaptchaSignin;
-var invisibleCaptchaSignup;
-var invisibleCaptchaForgotpassword;
-var invisibleCaptchaShortlink;
+var captchaShort;
+var captchaContact;
+var captchaSignin;
+var captchaSignup;
+var captchaForgotpassword;
+var captchaShortlink;
+var invisiblecaptchaShort;
+var invisiblecaptchaContact;
+var invisiblecaptchaSignin;
+var invisiblecaptchaSignup;
+var invisiblecaptchaForgotpassword;
+var invisiblecaptchaShortlink;
 
 window.onload = function() {
 
-  if (app_vars['enable_Captcha'] !== 'yes') {
+  if (app_vars['enable_captcha'] !== 'yes') {
     return true;
   }
 
-  if (app_vars['Captcha_type'] === 'solvemedia') {
+  if (app_vars['captcha_type'] === 'solvemedia') {
     if (app_vars['user_id'] === null &&
-        app_vars['Captcha_short_anonymous'] === '1' &&
-        $('#CaptchaShort').length) {
-      CaptchaShort = ACPuzzle.create(
+        app_vars['captcha_short_anonymous'] === '1' &&
+        $('#captchaShort').length) {
+      captchaShort = ACPuzzle.create(
           app_vars['solvemedia_challenge_key'],
-          'CaptchaShort',
-          {multi: true, id: 'CaptchaShort'}
+          'captchaShort',
+          {multi: true, id: 'captchaShort'}
       );
     }
 
-    if (app_vars['Captcha_contact'] === 'yes' && $('#CaptchaContact').length) {
-      CaptchaContact = ACPuzzle.create(
+    if (app_vars['captcha_contact'] === 'yes' && $('#captchaContact').length) {
+      captchaContact = ACPuzzle.create(
           app_vars['solvemedia_challenge_key'],
-          'CaptchaContact',
-          {multi: true, id: 'CaptchaContact'}
+          'captchaContact',
+          {multi: true, id: 'captchaContact'}
       );
     }
 
-    if (app_vars['Captcha_signin'] === 'yes' && $('#CaptchaSignin').length) {
-      CaptchaSignin = ACPuzzle.create(
+    if (app_vars['captcha_signin'] === 'yes' && $('#captchaSignin').length) {
+      captchaSignin = ACPuzzle.create(
           app_vars['solvemedia_challenge_key'],
-          'CaptchaSignin',
-          {multi: true, id: 'CaptchaSignin'}
+          'captchaSignin',
+          {multi: true, id: 'captchaSignin'}
       );
     }
 
-    if (app_vars['Captcha_signup'] === 'yes' && $('#CaptchaSignup').length) {
-      CaptchaSignup = ACPuzzle.create(
+    if (app_vars['captcha_signup'] === 'yes' && $('#captchaSignup').length) {
+      captchaSignup = ACPuzzle.create(
           app_vars['solvemedia_challenge_key'],
-          'CaptchaSignup',
-          {multi: true, id: 'CaptchaSignup'}
+          'captchaSignup',
+          {multi: true, id: 'captchaSignup'}
       );
     }
 
-    if (app_vars['Captcha_forgot_password'] === 'yes' &&
-        $('#CaptchaForgotpassword').length) {
-      CaptchaForgotpassword = ACPuzzle.create(
+    if (app_vars['captcha_forgot_password'] === 'yes' &&
+        $('#captchaForgotpassword').length) {
+      captchaForgotpassword = ACPuzzle.create(
           app_vars['solvemedia_challenge_key'],
-          'CaptchaForgotpassword',
-          {multi: true, id: 'CaptchaForgotpassword'}
+          'captchaForgotpassword',
+          {multi: true, id: 'captchaForgotpassword'}
       );
     }
 
-    if (app_vars['Captcha_shortlink'] === 'yes' &&
-        $('#CaptchaShortlink').length) {
-      CaptchaShortlink = ACPuzzle.create(
+    if (app_vars['captcha_shortlink'] === 'yes' &&
+        $('#captchaShortlink').length) {
+      captchaShortlink = ACPuzzle.create(
           app_vars['solvemedia_challenge_key'],
-          'CaptchaShortlink',
-          {multi: true, id: 'CaptchaShortlink'}
+          'captchaShortlink',
+          {multi: true, id: 'captchaShortlink'}
       );
     }
   }
 
 };
 
-var onloadTurnstileCallback = function() {
-    if (app_vars['enable_Captcha'] !== 'yes') {
-        return true;
-    }
+var onloadreCaptchaCallback = function() {
 
-    if (app_vars['Captcha_type'] === 'turnstile') {
-
-        if (app_vars['user_id'] === null &&
-            app_vars['Captcha_short_anonymous'] === '1' &&
-            $('#CaptchaShort').length) {
-            $('#shorten .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaShort = turnstile.render('#CaptchaShort', {
-                'sitekey': app_vars['turnstile_site_key'],
-                'callback': function(response) {
-                    $('#shorten .btn-Captcha').removeAttr('disabled');
-                },
-            });
-        }
-
-        if (app_vars['Captcha_contact'] === 'yes' && $('#CaptchaContact').length) {
-            $('#contact-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaContact = turnstile.render('#CaptchaContact', {
-                'sitekey': app_vars['turnstile_site_key'],
-                'callback': function(response) {
-                    $('#contact-form .btn-Captcha').removeAttr('disabled');
-                },
-            });
-        }
-
-        if (app_vars['Captcha_signin'] === 'yes' && $('#CaptchaSignin').length) {
-            $('#signin-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaSignin = turnstile.render('#CaptchaSignin', {
-                'sitekey': app_vars['turnstile_site_key'],
-                'callback': function(response) {
-                    $('#signin-form .btn-Captcha').removeAttr('disabled');
-                },
-            });
-        }
-
-        if (app_vars['Captcha_signup'] === 'yes' && $('#CaptchaSignup').length) {
-            $('#signup-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaSignup = turnstile.render('#CaptchaSignup', {
-                'sitekey': app_vars['turnstile_site_key'],
-                'callback': function(response) {
-                    $('#signup-form .btn-Captcha').removeAttr('disabled');
-                },
-            });
-        }
-
-        if (app_vars['Captcha_forgot_password'] === 'yes' &&
-            $('#CaptchaForgotpassword').length) {
-            $('#forgotpassword-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaForgotpassword = turnstile.render('#CaptchaForgotpassword', {
-                'sitekey': app_vars['turnstile_site_key'],
-                'callback': function(response) {
-                    $('#forgotpassword-form .btn-Captcha').removeAttr('disabled');
-                },
-            });
-        }
-
-        if (app_vars['Captcha_shortlink'] === 'yes' &&
-            $('#CaptchaShortlink').length) {
-            $('#link-view .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaShortlink = turnstile.render('#CaptchaShortlink', {
-                'sitekey': app_vars['turnstile_site_key'],
-                'callback': function(response) {
-                    $('#link-view .btn-Captcha').removeAttr('disabled');
-                },
-            });
-        }
-    }
-
-};
-
-var onloadReCaptchaCallback = function() {
-
-  if (app_vars['enable_Captcha'] !== 'yes') {
+  if (app_vars['enable_captcha'] !== 'yes') {
     return true;
   }
 
-  if (app_vars['Captcha_type'] === 'reCaptcha') {
+  if (app_vars['captcha_type'] === 'reCaptcha') {
     if (app_vars['user_id'] === null &&
-        app_vars['Captcha_short_anonymous'] === '1' &&
-        $('#CaptchaShort').length) {
-      $('#shorten .btn-Captcha').attr('disabled', 'disabled');
-      CaptchaShort = greCaptcha.render('CaptchaShort', {
-        'sitekey': app_vars['reCaptcha_site_key'],
+        app_vars['captcha_short_anonymous'] === '1' &&
+        $('#captchaShort').length) {
+      $('#shorten .btn-captcha').attr('disabled', 'disabled');
+      captchaShort = greCaptcha.render('captchaShort', {
+        'sitekey': app_vars['reCAPTCHA_site_key'],
         'callback': function(response) {
-          $('#shorten .btn-Captcha').removeAttr('disabled');
+          $('#shorten .btn-captcha').removeAttr('disabled');
         },
       });
     }
 
-    if (app_vars['Captcha_contact'] === 'yes' && $('#CaptchaContact').length) {
-      $('#contact-form .btn-Captcha').attr('disabled', 'disabled');
-      CaptchaContact = greCaptcha.render('CaptchaContact', {
-        'sitekey': app_vars['reCaptcha_site_key'],
+    if (app_vars['captcha_contact'] === 'yes' && $('#captchaContact').length) {
+      $('#contact-form .btn-captcha').attr('disabled', 'disabled');
+      captchaContact = greCaptcha.render('captchaContact', {
+        'sitekey': app_vars['reCAPTCHA_site_key'],
         'callback': function(response) {
-          $('#contact-form .btn-Captcha').removeAttr('disabled');
+          $('#contact-form .btn-captcha').removeAttr('disabled');
         },
       });
     }
 
-    if (app_vars['Captcha_signin'] === 'yes' && $('#CaptchaSignin').length) {
-      $('#signin-form .btn-Captcha').attr('disabled', 'disabled');
-      CaptchaSignin = greCaptcha.render('CaptchaSignin', {
-        'sitekey': app_vars['reCaptcha_site_key'],
+    if (app_vars['captcha_signin'] === 'yes' && $('#captchaSignin').length) {
+      $('#signin-form .btn-captcha').attr('disabled', 'disabled');
+      captchaSignin = greCaptcha.render('captchaSignin', {
+        'sitekey': app_vars['reCAPTCHA_site_key'],
         'callback': function(response) {
-          $('#signin-form .btn-Captcha').removeAttr('disabled');
+          $('#signin-form .btn-captcha').removeAttr('disabled');
         },
       });
     }
 
-    if (app_vars['Captcha_signup'] === 'yes' && $('#CaptchaSignup').length) {
-      $('#signup-form .btn-Captcha').attr('disabled', 'disabled');
-      CaptchaSignup = greCaptcha.render('CaptchaSignup', {
-        'sitekey': app_vars['reCaptcha_site_key'],
+    if (app_vars['captcha_signup'] === 'yes' && $('#captchaSignup').length) {
+      $('#signup-form .btn-captcha').attr('disabled', 'disabled');
+      captchaSignup = greCaptcha.render('captchaSignup', {
+        'sitekey': app_vars['reCAPTCHA_site_key'],
         'callback': function(response) {
-          $('#signup-form .btn-Captcha').removeAttr('disabled');
+          $('#signup-form .btn-captcha').removeAttr('disabled');
         },
       });
     }
 
-    if (app_vars['Captcha_forgot_password'] === 'yes' &&
-        $('#CaptchaForgotpassword').length) {
-      $('#forgotpassword-form .btn-Captcha').attr('disabled', 'disabled');
-      CaptchaForgotpassword = greCaptcha.render('CaptchaForgotpassword', {
-        'sitekey': app_vars['reCaptcha_site_key'],
+    if (app_vars['captcha_forgot_password'] === 'yes' &&
+        $('#captchaForgotpassword').length) {
+      $('#forgotpassword-form .btn-captcha').attr('disabled', 'disabled');
+      captchaForgotpassword = greCaptcha.render('captchaForgotpassword', {
+        'sitekey': app_vars['reCAPTCHA_site_key'],
         'callback': function(response) {
-          $('#forgotpassword-form .btn-Captcha').removeAttr('disabled');
+          $('#forgotpassword-form .btn-captcha').removeAttr('disabled');
         },
       });
     }
 
-    if (app_vars['Captcha_shortlink'] === 'yes' &&
-        $('#CaptchaShortlink').length) {
-      $('#link-view .btn-Captcha').attr('disabled', 'disabled');
-      CaptchaShortlink = greCaptcha.render('CaptchaShortlink', {
-        'sitekey': app_vars['reCaptcha_site_key'],
+    if (app_vars['captcha_shortlink'] === 'yes' &&
+        $('#captchaShortlink').length) {
+      $('#link-view .btn-captcha').attr('disabled', 'disabled');
+      captchaShortlink = greCaptcha.render('captchaShortlink', {
+        'sitekey': app_vars['reCAPTCHA_site_key'],
         'callback': function(response) {
-          $('#link-view .btn-Captcha').removeAttr('disabled');
+          $('#link-view .btn-captcha').removeAttr('disabled');
         },
       });
     }
   }
 
-  if (app_vars['Captcha_type'] === 'invisible-reCaptcha') {
+  if (app_vars['captcha_type'] === 'invisible-reCaptcha') {
     if (app_vars['user_id'] === null &&
-        app_vars['Captcha_short_anonymous'] === '1' && $(
-            '#CaptchaShort').length) {
-      invisibleCaptchaShort = greCaptcha.render('CaptchaShort', {
-        'sitekey': app_vars['invisible_reCaptcha_site_key'],
+        app_vars['captcha_short_anonymous'] === '1' && $(
+            '#captchaShort').length) {
+      invisiblecaptchaShort = greCaptcha.render('captchaShort', {
+        'sitekey': app_vars['invisible_reCAPTCHA_site_key'],
         'size': 'invisible',
         'callback': function(response) {
-          if (greCaptcha.getResponse(invisibleCaptchaShort)) {
-            $('#shorten').addClass('Captcha-done').submit();
+          if (greCaptcha.getResponse(invisiblecaptchaShort)) {
+            $('#shorten').addClass('captcha-done').submit();
           }
         },
       });
 
       $('#shorten').submit(function(event) {
-        if (!greCaptcha.getResponse(invisibleCaptchaShort)) {
-          event.preventDefault(); //prevent form submit before Captcha is completed
-          greCaptcha.execute(invisibleCaptchaShort);
+        if (!greCaptcha.getResponse(invisiblecaptchaShort)) {
+          event.preventDefault(); //prevent form submit before captcha is completed
+          greCaptcha.execute(invisiblecaptchaShort);
         }
       });
     }
 
-    if (app_vars['Captcha_contact'] === 'yes' && $('#CaptchaContact').length) {
-      invisibleCaptchaContact = greCaptcha.render('CaptchaContact', {
-        'sitekey': app_vars['invisible_reCaptcha_site_key'],
+    if (app_vars['captcha_contact'] === 'yes' && $('#captchaContact').length) {
+      invisiblecaptchaContact = greCaptcha.render('captchaContact', {
+        'sitekey': app_vars['invisible_reCAPTCHA_site_key'],
         'size': 'invisible',
         'callback': function(response) {
-          if (greCaptcha.getResponse(invisibleCaptchaContact)) {
-            $('#contact-form').addClass('Captcha-done').submit();
+          if (greCaptcha.getResponse(invisiblecaptchaContact)) {
+            $('#contact-form').addClass('captcha-done').submit();
           }
         },
       });
 
       $('#contact-form').submit(function(event) {
-        if (!greCaptcha.getResponse(invisibleCaptchaContact)) {
-          event.preventDefault(); //prevent form submit before Captcha is completed
-          greCaptcha.execute(invisibleCaptchaContact);
+        if (!greCaptcha.getResponse(invisiblecaptchaContact)) {
+          event.preventDefault(); //prevent form submit before captcha is completed
+          greCaptcha.execute(invisiblecaptchaContact);
         }
       });
     }
 
-    if (app_vars['Captcha_signin'] === 'yes' && $('#CaptchaSignin').length) {
-      invisibleCaptchaSignin = greCaptcha.render('CaptchaSignin', {
-        'sitekey': app_vars['invisible_reCaptcha_site_key'],
+    if (app_vars['captcha_signin'] === 'yes' && $('#captchaSignin').length) {
+      invisiblecaptchaSignin = greCaptcha.render('captchaSignin', {
+        'sitekey': app_vars['invisible_reCAPTCHA_site_key'],
         'size': 'invisible',
         'callback': function(response) {
           $('#signin-form').submit();
@@ -273,16 +199,16 @@ var onloadReCaptchaCallback = function() {
       });
 
       $('#signin-form').submit(function(event) {
-        if (!greCaptcha.getResponse(invisibleCaptchaSignin)) {
-          event.preventDefault(); //prevent form submit before Captcha is completed
-          greCaptcha.execute(invisibleCaptchaSignin);
+        if (!greCaptcha.getResponse(invisiblecaptchaSignin)) {
+          event.preventDefault(); //prevent form submit before captcha is completed
+          greCaptcha.execute(invisiblecaptchaSignin);
         }
       });
     }
 
-    if (app_vars['Captcha_signup'] === 'yes' && $('#CaptchaSignup').length) {
-      invisibleCaptchaSignup = greCaptcha.render('CaptchaSignup', {
-        'sitekey': app_vars['invisible_reCaptcha_site_key'],
+    if (app_vars['captcha_signup'] === 'yes' && $('#captchaSignup').length) {
+      invisiblecaptchaSignup = greCaptcha.render('captchaSignup', {
+        'sitekey': app_vars['invisible_reCAPTCHA_site_key'],
         'size': 'invisible',
         'callback': function(response) {
           $('#signup-form').submit();
@@ -290,18 +216,18 @@ var onloadReCaptchaCallback = function() {
       });
 
       $('#signup-form').submit(function(event) {
-        if (!greCaptcha.getResponse(invisibleCaptchaSignup)) {
-          event.preventDefault(); //prevent form submit before Captcha is completed
-          greCaptcha.execute(invisibleCaptchaSignup);
+        if (!greCaptcha.getResponse(invisiblecaptchaSignup)) {
+          event.preventDefault(); //prevent form submit before captcha is completed
+          greCaptcha.execute(invisiblecaptchaSignup);
         }
       });
     }
 
-    if (app_vars['Captcha_forgot_password'] === 'yes' &&
-        $('#CaptchaForgotpassword').length) {
-      invisibleCaptchaForgotpassword = greCaptcha.render(
-          'CaptchaForgotpassword', {
-            'sitekey': app_vars['invisible_reCaptcha_site_key'],
+    if (app_vars['captcha_forgot_password'] === 'yes' &&
+        $('#captchaForgotpassword').length) {
+      invisiblecaptchaForgotpassword = greCaptcha.render(
+          'captchaForgotpassword', {
+            'sitekey': app_vars['invisible_reCAPTCHA_site_key'],
             'size': 'invisible',
             'callback': function(response) {
               $('#forgotpassword-form').submit();
@@ -309,17 +235,17 @@ var onloadReCaptchaCallback = function() {
           });
 
       $('#forgotpassword-form').submit(function(event) {
-        if (!greCaptcha.getResponse(invisibleCaptchaForgotpassword)) {
-          event.preventDefault(); //prevent form submit before Captcha is completed
-          greCaptcha.execute(invisibleCaptchaForgotpassword);
+        if (!greCaptcha.getResponse(invisiblecaptchaForgotpassword)) {
+          event.preventDefault(); //prevent form submit before captcha is completed
+          greCaptcha.execute(invisiblecaptchaForgotpassword);
         }
       });
     }
 
-    if (app_vars['Captcha_shortlink'] === 'yes' &&
-        $('#CaptchaShortlink').length) {
-      invisibleCaptchaShortlink = greCaptcha.render('CaptchaShortlink', {
-        'sitekey': app_vars['invisible_reCaptcha_site_key'],
+    if (app_vars['captcha_shortlink'] === 'yes' &&
+        $('#captchaShortlink').length) {
+      invisiblecaptchaShortlink = greCaptcha.render('captchaShortlink', {
+        'sitekey': app_vars['invisible_reCAPTCHA_site_key'],
         'size': 'invisible',
         'callback': function(response) {
           $('#link-view').submit();
@@ -327,9 +253,9 @@ var onloadReCaptchaCallback = function() {
       });
 
       $('#link-view').submit(function(event) {
-        if (!greCaptcha.getResponse(invisibleCaptchaShortlink)) {
-          event.preventDefault(); //prevent form submit before Captcha is completed
-          greCaptcha.execute(invisibleCaptchaShortlink);
+        if (!greCaptcha.getResponse(invisiblecaptchaShortlink)) {
+          event.preventDefault(); //prevent form submit before captcha is completed
+          greCaptcha.execute(invisiblecaptchaShortlink);
         }
       });
     }
@@ -337,73 +263,73 @@ var onloadReCaptchaCallback = function() {
 
 };
 
-var onloadHCaptchaCallback = function() {
+var onloadHcaptchaCallback = function() {
 
-    if (app_vars['enable_Captcha'] !== 'yes') {
+    if (app_vars['enable_captcha'] !== 'yes') {
         return true;
     }
 
-    if (app_vars['Captcha_type'] === 'hCaptcha_checkbox') {
+    if (app_vars['captcha_type'] === 'hcaptcha_checkbox') {
         if (app_vars['user_id'] === null &&
-            app_vars['Captcha_short_anonymous'] === '1' &&
-            $('#CaptchaShort').length) {
-            $('#shorten .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaShort = hCaptcha.render('CaptchaShort', {
-                'sitekey': app_vars['hCaptcha_checkbox_site_key'],
+            app_vars['captcha_short_anonymous'] === '1' &&
+            $('#captchaShort').length) {
+            $('#shorten .btn-captcha').attr('disabled', 'disabled');
+            captchaShort = hcaptcha.render('captchaShort', {
+                'sitekey': app_vars['hcaptcha_checkbox_site_key'],
                 'callback': function(response) {
-                    $('#shorten .btn-Captcha').removeAttr('disabled');
+                    $('#shorten .btn-captcha').removeAttr('disabled');
                 },
             });
         }
 
-        if (app_vars['Captcha_contact'] === 'yes' && $('#CaptchaContact').length) {
-            $('#contact-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaContact = hCaptcha.render('CaptchaContact', {
-                'sitekey': app_vars['hCaptcha_checkbox_site_key'],
+        if (app_vars['captcha_contact'] === 'yes' && $('#captchaContact').length) {
+            $('#contact-form .btn-captcha').attr('disabled', 'disabled');
+            captchaContact = hcaptcha.render('captchaContact', {
+                'sitekey': app_vars['hcaptcha_checkbox_site_key'],
                 'callback': function(response) {
-                    $('#contact-form .btn-Captcha').removeAttr('disabled');
+                    $('#contact-form .btn-captcha').removeAttr('disabled');
                 },
             });
         }
 
-        if (app_vars['Captcha_signin'] === 'yes' && $('#CaptchaSignin').length) {
-            $('#signin-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaSignin = hCaptcha.render('CaptchaSignin', {
-                'sitekey': app_vars['hCaptcha_checkbox_site_key'],
+        if (app_vars['captcha_signin'] === 'yes' && $('#captchaSignin').length) {
+            $('#signin-form .btn-captcha').attr('disabled', 'disabled');
+            captchaSignin = hcaptcha.render('captchaSignin', {
+                'sitekey': app_vars['hcaptcha_checkbox_site_key'],
                 'callback': function(response) {
-                    $('#signin-form .btn-Captcha').removeAttr('disabled');
+                    $('#signin-form .btn-captcha').removeAttr('disabled');
                 },
             });
         }
 
-        if (app_vars['Captcha_signup'] === 'yes' && $('#CaptchaSignup').length) {
-            $('#signup-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaSignup = hCaptcha.render('CaptchaSignup', {
-                'sitekey': app_vars['hCaptcha_checkbox_site_key'],
+        if (app_vars['captcha_signup'] === 'yes' && $('#captchaSignup').length) {
+            $('#signup-form .btn-captcha').attr('disabled', 'disabled');
+            captchaSignup = hcaptcha.render('captchaSignup', {
+                'sitekey': app_vars['hcaptcha_checkbox_site_key'],
                 'callback': function(response) {
-                    $('#signup-form .btn-Captcha').removeAttr('disabled');
+                    $('#signup-form .btn-captcha').removeAttr('disabled');
                 },
             });
         }
 
-        if (app_vars['Captcha_forgot_password'] === 'yes' &&
-            $('#CaptchaForgotpassword').length) {
-            $('#forgotpassword-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaForgotpassword = hCaptcha.render('CaptchaForgotpassword', {
-                'sitekey': app_vars['hCaptcha_checkbox_site_key'],
+        if (app_vars['captcha_forgot_password'] === 'yes' &&
+            $('#captchaForgotpassword').length) {
+            $('#forgotpassword-form .btn-captcha').attr('disabled', 'disabled');
+            captchaForgotpassword = hcaptcha.render('captchaForgotpassword', {
+                'sitekey': app_vars['hcaptcha_checkbox_site_key'],
                 'callback': function(response) {
-                    $('#forgotpassword-form .btn-Captcha').removeAttr('disabled');
+                    $('#forgotpassword-form .btn-captcha').removeAttr('disabled');
                 },
             });
         }
 
-        if (app_vars['Captcha_shortlink'] === 'yes' &&
-            $('#CaptchaShortlink').length) {
-            $('#link-view .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaShortlink = hCaptcha.render('CaptchaShortlink', {
-                'sitekey': app_vars['hCaptcha_checkbox_site_key'],
+        if (app_vars['captcha_shortlink'] === 'yes' &&
+            $('#captchaShortlink').length) {
+            $('#link-view .btn-captcha').attr('disabled', 'disabled');
+            captchaShortlink = hcaptcha.render('captchaShortlink', {
+                'sitekey': app_vars['hcaptcha_checkbox_site_key'],
                 'callback': function(response) {
-                    $('#link-view .btn-Captcha').removeAttr('disabled');
+                    $('#link-view .btn-captcha').removeAttr('disabled');
                 },
             });
         }
@@ -412,42 +338,31 @@ var onloadHCaptchaCallback = function() {
 };
 
 /**
- * Load reCaptcha/invisible-reCaptcha Captcha script
+ * Load reCaptcha/invisible-reCaptcha captcha script
  */
-if (['reCaptcha', 'invisible-reCaptcha'].indexOf(app_vars.Captcha_type) !== -1) {
+if (['reCaptcha', 'invisible-reCaptcha'].indexOf(app_vars.captcha_type) !== -1) {
     let reCaptcha_script = document.createElement('script');
-    reCaptcha_script.src = 'https://www.reCaptcha.net/reCaptcha/api.js?onload=onloadReCaptchaCallback&render=explicit';
+    reCaptcha_script.src = 'https://www.reCaptcha.net/reCaptcha/api.js?onload=onloadreCaptchaCallback&render=explicit';
     reCaptcha_script.async = true;
     reCaptcha_script.defer = true;
     document.body.appendChild(reCaptcha_script);
 }
 
 /**
- * Load Turnstile Captcha script
+ * Load hcaptcha script
  */
-if (['turnstile'].indexOf(app_vars.Captcha_type) !== -1) {
-    let turnstile_script = document.createElement('script');
-    turnstile_script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit';
-    turnstile_script.async = true;
-    turnstile_script.defer = true;
-    document.body.appendChild(turnstile_script);
+if (app_vars.captcha_type === 'hcaptcha_checkbox') {
+    let hcaptcha_script = document.createElement('script');
+    hcaptcha_script.src = 'https://hcaptcha.com/1/api.js?onload=onloadHcaptchaCallback&render=explicit';
+    hcaptcha_script.async = true;
+    hcaptcha_script.defer = true;
+    document.body.appendChild(hcaptcha_script);
 }
 
 /**
- * Load hCaptcha script
+ * Load SolveMedia captcha script
  */
-if (app_vars.Captcha_type === 'hCaptcha_checkbox') {
-    let hCaptcha_script = document.createElement('script');
-    hCaptcha_script.src = 'https://hCaptcha.com/1/api.js?onload=onloadHCaptchaCallback&render=explicit';
-    hCaptcha_script.async = true;
-    hCaptcha_script.defer = true;
-    document.body.appendChild(hCaptcha_script);
-}
-
-/**
- * Load SolveMedia Captcha script
- */
-if (app_vars.Captcha_type === 'solvemedia') {
+if (app_vars.captcha_type === 'solvemedia') {
     let script_solvemedia = document.createElement('script');
     script_solvemedia.type = 'text/javascript';
 
@@ -823,9 +738,9 @@ $('#go-link').one('submit.adLinkFly.counterSubmit', function(e) {
 });
 
 $('body').
-    one('focus.adLinkFly.displayShortenCaptcha', '#shorten input#url',
+    one('focus.adLinkFly.displayShortencaptcha', '#shorten input#url',
         function(e) {
-          $('#shorten .form-group.Captcha').slideDown('slow');
+          $('#shorten .form-group.captcha').slideDown('slow');
         });
 
 $(document).ready(function() {
@@ -1004,11 +919,11 @@ $('.shorten #shorten').on('submit.adLinkFly.homeShortLinkForm', function(e) {
     return;
   }
 
-  if (app_vars['Captcha_type'] === 'invisible-reCaptcha') {
-    if (app_vars['enable_Captcha'] === 'yes' &&
-        app_vars['Captcha_short_anonymous'] === '1' &&
-        $('#CaptchaContact').length) {
-      if (!$(this).hasClass('Captcha-done')) {
+  if (app_vars['captcha_type'] === 'invisible-reCaptcha') {
+    if (app_vars['enable_captcha'] === 'yes' &&
+        app_vars['captcha_short_anonymous'] === '1' &&
+        $('#captchaContact').length) {
+      if (!$(this).hasClass('captcha-done')) {
         return false;
       }
     }
@@ -1059,15 +974,15 @@ $('.shorten #shorten').on('submit.adLinkFly.homeShortLinkForm', function(e) {
       $('.shorten.loader').remove();
       shortenForm[0].reset();
       try {
-        turnstile.reset(CaptchaShort);
+        turnstile.reset(captchaShort);
       } catch (e) {
       }
       try {
-        greCaptcha.reset(CaptchaShort);
+        greCaptcha.reset(captchaShort);
       } catch (e) {
       }
       try {
-        ACPuzzle.reload('CaptchaShort');
+        ACPuzzle.reload('captchaShort');
       } catch (e) {
       }
     },
