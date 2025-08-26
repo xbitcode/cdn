@@ -412,54 +412,6 @@ var onloadHCaptchaCallback = function() {
 };
 
 /**
- * Load reCaptcha/invisible-reCaptcha Captcha script
- */
-if (['reCaptcha', 'invisible-reCaptcha'].indexOf(app_vars.Captcha_type) !== -1) {
-    let reCaptcha_script = document.createElement('script');
-    reCaptcha_script.src = 'https://www.reCaptcha.net/reCaptcha/api.js?onload=onloadReCaptchaCallback&render=explicit';
-    reCaptcha_script.async = true;
-    reCaptcha_script.defer = true;
-    document.body.appendChild(reCaptcha_script);
-}
-
-/**
- * Load Turnstile Captcha script
- */
-if (['turnstile'].indexOf(app_vars.Captcha_type) !== -1) {
-    let turnstile_script = document.createElement('script');
-    turnstile_script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit';
-    turnstile_script.async = true;
-    turnstile_script.defer = true;
-    document.body.appendChild(turnstile_script);
-}
-
-/**
- * Load hCaptcha script
- */
-if (app_vars.Captcha_type === 'hCaptcha_checkbox') {
-    let hCaptcha_script = document.createElement('script');
-    hCaptcha_script.src = 'https://hCaptcha.com/1/api.js?onload=onloadHCaptchaCallback&render=explicit';
-    hCaptcha_script.async = true;
-    hCaptcha_script.defer = true;
-    document.body.appendChild(hCaptcha_script);
-}
-
-/**
- * Load SolveMedia Captcha script
- */
-if (app_vars.Captcha_type === 'solvemedia') {
-    let script_solvemedia = document.createElement('script');
-    script_solvemedia.type = 'text/javascript';
-
-    if (location.protocol === 'https:') {
-        script_solvemedia.src = 'https://api-secure.solvemedia.com/papi/challenge.ajax';
-    } else {
-        script_solvemedia.src = 'http://api.solvemedia.com/papi/challenge.ajax';
-    }
-    document.body.appendChild(script_solvemedia);
-}
-
-/**
  * Ads JS
  */
 function setCookie(cname, cvalue, exdays)
