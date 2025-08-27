@@ -1,5 +1,5 @@
 /**
- * Turnstile Captcha Implementation
+ * Turnstile2 Captcha Implementation
  */
 var CaptchaShort;
 var CaptchaContact;
@@ -8,19 +8,19 @@ var CaptchaSignup;
 var CaptchaForgotpassword;
 var CaptchaShortlink;
 
-var onloadTurnstileCallback = function() {
+var onloadTurnstile2Callback2 = function() {
     if (app_vars['enable_captcha'] !== 'yes') {
         return true;
     }
 
-    if (app_vars['captcha_type'] === 'turnstile') {
+    if (app_vars['captcha_type'] === 'turnstile2') {
 
         if (app_vars['user_id'] === null &&
             app_vars['Captcha_short_anonymous'] === '1' &&
             $('#CaptchaShort').length) {
             $('#shorten .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaShort = turnstile.render('#CaptchaShort', {
-                'sitekey': app_vars['turnstile_site_key'],
+            CaptchaShort = turnstile2.render('#CaptchaShort', {
+                'sitekey': app_vars['turnstile2_site_key'],
                 'callback': function(response) {
                     $('#shorten .btn-Captcha').removeAttr('disabled');
                 },
@@ -29,8 +29,8 @@ var onloadTurnstileCallback = function() {
 
         if (app_vars['Captcha_contact'] === 'yes' && $('#CaptchaContact').length) {
             $('#contact-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaContact = turnstile.render('#CaptchaContact', {
-                'sitekey': app_vars['turnstile_site_key'],
+            CaptchaContact = turnstile2.render('#CaptchaContact', {
+                'sitekey': app_vars['turnstile2_site_key'],
                 'callback': function(response) {
                     $('#contact-form .btn-Captcha').removeAttr('disabled');
                 },
@@ -39,8 +39,8 @@ var onloadTurnstileCallback = function() {
 
         if (app_vars['Captcha_signin'] === 'yes' && $('#CaptchaSignin').length) {
             $('#signin-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaSignin = turnstile.render('#CaptchaSignin', {
-                'sitekey': app_vars['turnstile_site_key'],
+            CaptchaSignin = turnstile2.render('#CaptchaSignin', {
+                'sitekey': app_vars['turnstile2_site_key'],
                 'callback': function(response) {
                     $('#signin-form .btn-Captcha').removeAttr('disabled');
                 },
@@ -49,8 +49,8 @@ var onloadTurnstileCallback = function() {
 
         if (app_vars['Captcha_signup'] === 'yes' && $('#CaptchaSignup').length) {
             $('#signup-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaSignup = turnstile.render('#CaptchaSignup', {
-                'sitekey': app_vars['turnstile_site_key'],
+            CaptchaSignup = turnstile2.render('#CaptchaSignup', {
+                'sitekey': app_vars['turnstile2_site_key'],
                 'callback': function(response) {
                     $('#signup-form .btn-Captcha').removeAttr('disabled');
                 },
@@ -60,8 +60,8 @@ var onloadTurnstileCallback = function() {
         if (app_vars['Captcha_forgot_password'] === 'yes' &&
             $('#CaptchaForgotpassword').length) {
             $('#forgotpassword-form .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaForgotpassword = turnstile.render('#CaptchaForgotpassword', {
-                'sitekey': app_vars['turnstile_site_key'],
+            CaptchaForgotpassword = turnstile2.render('#CaptchaForgotpassword', {
+                'sitekey': app_vars['turnstile2_site_key'],
                 'callback': function(response) {
                     $('#forgotpassword-form .btn-Captcha').removeAttr('disabled');
                 },
@@ -71,8 +71,8 @@ var onloadTurnstileCallback = function() {
         if (app_vars['Captcha_shortlink'] === 'yes' &&
             $('#CaptchaShortlink').length) {
             $('#link-view .btn-Captcha').attr('disabled', 'disabled');
-            CaptchaShortlink = turnstile.render('#CaptchaShortlink', {
-                'sitekey': app_vars['turnstile_site_key'],
+            CaptchaShortlink = turnstile2.render('#CaptchaShortlink', {
+                'sitekey': app_vars['turnstile2_site_key'],
                 'callback': function(response) {
                     $('#link-view .btn-Captcha').removeAttr('disabled');
                 },
@@ -83,14 +83,14 @@ var onloadTurnstileCallback = function() {
 };
 
 /**
- * Load Turnstile Captcha script
+ * Load Turnstile2 Captcha script
  */
-if (app_vars.captcha_type === 'turnstile') {
-    let turnstile_script = document.createElement('script');
-    turnstile_script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit';
-    turnstile_script.async = true;
-    turnstile_script.defer = true;
-    document.body.appendChild(turnstile_script);
+if (app_vars.captcha_type === 'turnstile2') {
+    let turnstile2_script = document.createElement('script');
+    turnstile2_script.src = 'https://challenges.cloudflare.com/turnstile2/v0/api.js?onload=onloadTurnstile2Callback2&render=explicit';
+    turnstile2_script.async = true;
+    turnstile2_script.defer = true;
+    document.body.appendChild(turnstile2_script);
 }
 
 /**
@@ -638,7 +638,7 @@ $('.shorten #shorten').on('submit.adLinkFly.homeShortLinkForm', function(e) {
     return;
   }
 
-  // No special handling needed for Turnstile
+  // No special handling needed for Turnstile2
 
   var shortenForm = $(this);
   var submitButton = shortenForm.find('button');
@@ -685,7 +685,7 @@ $('.shorten #shorten').on('submit.adLinkFly.homeShortLinkForm', function(e) {
       $('.shorten.loader').remove();
       shortenForm[0].reset();
       try {
-        turnstile.reset(CaptchaShort);
+        turnstile2.reset(CaptchaShort);
       } catch (e) {
       }
     },
